@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta brand="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <title>FOODS</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h2 class="text-center">MENU OF FOODS</h2>
+           
+            <div id="demo"></div>
+        
+            <script>
+                var txt = "";
+                const xmlhttp = new XMLHttpRequest();
+                xmlhttp.onload = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        let foods = JSON.parse(this.responseText);
+                        console.log(foods);
+                        let txt = "";
+                        let user = "";
+            
+                        // Start of table
+                                
+                        txt += `<table class="table">
+                                        <tr>
+                                            <th scope="col">Pictures</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Origin</th>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">List of Dishes</th>
+                                        </tr>
+                                    <tbody>`;
+            
+                        for(i = 0; i < foods.length;i++){
+                            txt += `<tr>
+                                       
+                                        <td><img class="card-img" src="pics/img/${foods[i].img}" alt=""></td>
+                                        <td>${foods[i].name}</td>
+                                        <td>${foods[i].origin}</td>
+                                        <td>${foods[i].item}</td>
+                                        <td>
+                                            <ul class="list-unstyled">`;
+            
+                            for(j = 0; j < foods[i].dishes.length; j++){
+                                txt += `<li><b>•</b>${foods[i].dishes[j]}</li>`;
+                            }
+            
+                            txt += `        </ul>
+                                        </td>
+                                    </tr>`;
+                        }
+            
+                        // End of table
+                        txt += `</tbody>
+                                </table>`;
+            
+                        document.getElementById("demo").innerHTML = txt;
+                    }
+                }
+                xmlhttp.open("GET", "http://jsonactivityarman.test/foods.php");
+                xmlhttp.send();
+            </script>
+            
+
+    
+        </div>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    </body>
+    </html>
